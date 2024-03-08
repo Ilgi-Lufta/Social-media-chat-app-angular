@@ -1,0 +1,9 @@
+<input type="text" [(ngModel)]="name" >
+<input type="number" [(ngModel)]="age" >
+<button type="submit" (click)="adduser()"> add</button>
+<button type="submit" (click)="getdata()"> get</button>
+<div *ngFor="let hero of  data; let i = index" >
+<p>{{i}}. {{hero.date}}</p>
+<p>{{hero.temperatureC}}</p>
+<p>{{hero.temperatureF}}</p>
+</div>

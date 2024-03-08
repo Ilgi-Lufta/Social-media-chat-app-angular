@@ -1,0 +1,31 @@
+<table>
+    <tr>
+      <th>name</th>
+      <th>age</th>
+      <th>actions</th>
+    </tr>
+    <tr *ngFor="let user of  myarray; let i = index">
+        <td>{{user.name}}</td>
+        <td>{{user.age}}</td>
+        <td>
+            <button (click)="remove(i)">remove me</button>
+            <button routerLink="/users/edit/{{i}}" >edit me</button>
+            <button routerLink="/users/details/{{i}}" >details</button>
+        </td>
+    </tr>
+</table>
+
+
+<!-- 
+<div  *ngFor="let user of myarray;index as i"> 
+    <p (click)="toggle(i)">{{i}}=> name:{{user.name}},age: {{user.age}}</p>
+    <button (click)="remove(i)">remove me</button>
+    <button (click)="showDiscriptionFunc(i)">function descp</button>
+    <a routerLink="/users/details/{{i}}" > child discription</a>
+    
+    <app-edit-my-first [Id]="Id" *ngIf="clicked && Id === i" ></app-edit-my-first>
+    <app-description [User]="user"  *ngIf="showDiscription && i === index" ></app-description> 
+</div> -->
+<router-outlet></router-outlet>
+
+

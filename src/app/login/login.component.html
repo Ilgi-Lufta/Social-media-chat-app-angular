@@ -1,0 +1,20 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)"  class="mx-1 mx-md-4">
+    <div class="d-flex flex-row align-items-center mb-4">
+        <div class="form-outline flex-fill mb-0">
+            <label style="display: block;"  class="form-label"></label>
+            <input  class="form-control" formControlName="UserName" />
+            <!-- <span asp-validation-for="UserName"></span> -->
+        </div>
+    </div>
+    <div class="d-flex flex-row align-items-center mb-4">
+        <div class="form-outline flex-fill mb-0">
+            <label style="display: block;"  class="form-label" ></label>
+            <input  class="form-control" formControlName="Password" />
+            <!-- <span asp-validation-for="Password"></span> -->
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+        <button routerLink='/register' class="btn btn-primary btn-lg">Not registered</button>
+    </div>
+</form>

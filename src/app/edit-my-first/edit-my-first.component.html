@@ -1,0 +1,19 @@
+<!-- <input type="text" [(ngModel)]="name" >
+<input type="number" [(ngModel)]="age" >
+<button type="submit" (click)="editUser()"> edit</button> -->
+
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <label for="name">Name: </label>
+    <input id="name"
+     type="text"
+     formControlName="name"
+     >
+<span *ngIf="myForm.controls['name'].touched === true"> dirty</span>
+<span *ngIf=" this.myForm.controls['name'].invalid === true"> invalid </span>
+    <label for="age">age: </label>
+    <input id="age" type="number" formControlName="age">
+    <button type="button" (click)="onSubmit(myForm)">
+        edit user
+    </button>
+

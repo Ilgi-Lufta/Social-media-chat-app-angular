@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div>
+            <form  [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+                <label  for="name">Name: </label>
+                <input [ngClass]="[myForm.controls['name'].touched === true && myForm.controls['name'].invalid === true ? 'invalid'  : '']"
+                 id="name"
+                 type="text"
+                 formControlName="name"
+                 >
+<span *ngIf="myForm.controls['name'].touched === true"> dirty</span>
+<span *ngIf=" this.myForm.controls['name'].invalid === true"> invalid </span>
+                <label for="email">Mail: </label>
+                <input id="email" type="text" formControlName="email">
+                <select formControlName="projectStatus">
+                    <option *ngFor="let status of pStatus" [ngValue]="status">
+                        {{ status }}
+                    </option>
+                </select>
+                <button type="button" (click)="addLesson()">
+                    add lession
+                </button>
+<hr>
+         <div formArrayName="lessons" >
+                <div *ngFor="let hobbyControl of controls; let i = index">
+                    <div [formGroupName]="i"> 
+                        <label for="title">title</label>
+                        <input type="text" 
+                        id="title"
+                        formControlName="title">
+                        <label for="level">level</label>
+                        <input type="text" 
+                        id="level"
+                        formControlName="level">
+                        <button (click)="removeLesson(i,hobbyControl)" > remove {{hobbyControl}}</button>
+                    </div>
+                  
+                </div>
+         </div>
+
+
+                <button type="submit">submit</button>
+            </form>
+
+
+        </div>
+    </div>
+</div>

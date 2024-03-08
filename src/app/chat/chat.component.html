@@ -1,0 +1,72 @@
+<!-- <div *ngFor="let message of messages">
+  {{message}}
+</div>
+<form (ngSubmit)="sendMessage()">
+  <input type="text" [(ngModel)]="user" name="user" placeholder="User">
+  <input type="text" [(ngModel)]="message" name="message" placeholder="Message">
+  <button type="submit">Send</button>
+</form> -->
+
+<!-- <form [formGroup]="myForm" (ngSubmit)="onSubmit2(myForm)">
+  <label for="message">message: </label>
+  <input id="message" type="text" formControlName="message">
+  <button type="submit">submit</button>
+</form> -->
+<div class="row">
+  <div class="col-sm-3">
+    <div style="background-color: rgb(68, 0, 255);height: 50px;" class="row mb-3" *ngFor="let chat of myChats">
+
+      <h3 (click)="GetRoomMessage(chat.chatRoomId)" style="color: white;background: 7px solid black;"> this is chat
+        {{chat.chatRoomId}}</h3>
+    </div>
+
+
+  </div>
+  <div class="col-sm-9">
+    <form [formGroup]="myForm2" (ngSubmit)="FormSubmit(myForm2)">
+      <label for="message">Chat message: </label>
+      <input id="message" type="text" formControlName="message2">
+      <button type="submit">submit</button>
+    </form>
+    <div *ngFor="let ChatRoom of  myChatRoom">
+      <div [ngClass]="ChatRoom.messagesSenderId ===iLoguari.userId ? 'offset-md-3' : 'offset-md-6' " class="row">
+        <span *ngIf="ChatRoom.messagesSenderId ===iLoguari.userId ; else elseBlock"
+          style="background-color: rgb(80, 238, 255);">
+          {{iLoguari.firstName}} 
+          {{ChatRoom.message}}
+        </span>
+        <ng-template #elseBlock>
+          <span></span>
+          <span style="background-color: coral;">
+            {{ChatRoom.messagesSender.firstName}}
+            {{ChatRoom.message}} </span>
+        </ng-template>
+
+      </div>
+ 
+    </div>
+
+
+
+    <!-- <div class="row" *ngFor="let message of SendMessages">
+      <div class="col-sm-3">
+
+      </div>
+      <div class="col-sm-9">
+        <div [ngClass]="message.messagesSenderId ===iLoguari.userId ? 'offset-md-3' : 'offset-md-6' " class="row">
+          <span *ngIf="message.messagesSenderId ===iLoguari.userId ; else elseBlock"
+            style="background-color: rgb(80, 238, 255);">
+            {{message.messagesSender.firstName}}
+            {{message.message}}
+          </span>
+          <ng-template #elseBlock>
+            <span></span>
+            <span style="background-color: coral;">{{message.messagesReciver.firstName}}
+              {{message.message}} </span>
+          </ng-template>
+
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

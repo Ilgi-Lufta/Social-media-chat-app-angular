@@ -1,0 +1,1 @@
+export interface registerInterface {FirstName: string; LastName: string; UserName:string; Password: string,Confirm: string}

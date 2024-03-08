@@ -1,0 +1,1 @@
+export interface loginInterface {UserName:string; Password: string}

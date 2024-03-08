@@ -1,0 +1,261 @@
+<div class="text-center row mt-2">
+    <!-- <input type="file" class="file-input" 
+    (change)="onFileSelected($event)" #fileUpload>
+    <button mat-mini-fab color="primary" class="upload-btn"
+    (click)="fileUpload.click()">ruaj
+</button> -->
+    <div class="row mb-4 mt-3">
+        <div class="col-sm-2 offset-sm-2">
+            <img src="{{iLoguari.myimage | img }}" class="rounded-circle" width="100px"
+                height="100px" asp-append-version="true" alt="">
+          
+        </div> 
+        <div class="col-sm-4">
+            <h1 class="display-4">Welcome {{iLoguari.firstName}}</h1>
+        </div>
+        <div class="col-sm-3 offset-sm-1">
+
+            <a routerLink="/postAdd/{{iLoguari.userId}}" class="btn btn-primary ">Add profile photo</a>
+            <a routerLink='/register' (click)="Logout()" class="btn btn-danger ">Logout</a>
+            <a routerLink='/chat' class="btn btn-danger ">chat</a>
+
+        </div>
+
+    </div>
+    <div class="row mb-5">
+        <div class="col-sm-1 offset-sm-6">
+
+            <a routerLink="/ProfilePhotoAdd/{{iLoguari.userId}}" class="btn btn-primary ">Add Post</a>
+        </div>
+    </div>
+
+</div>
+<div class="row ms-3 me-3">
+    <div class="col-sm-3">
+        <table class="table">
+            <h3>Suggested Friends</h3>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+                <tr *ngFor="let user of AllUsers">
+
+                    <td>
+                        <img src="{{user.myimage}}" class="rounded-circle" width="50px" height="50px"
+                            asp-append-version="true" alt="">
+
+                        {{user.firstName }}
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" (click)="SendR(user.userId)">Send Request</button>
+                    </td>
+
+                </tr>
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-3">
+        <table class="table">
+            <h3>Unfriend</h3>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                <tr *ngFor="let user of AllFriends">
+                    <td *ngIf="user.sender?.userId === iLoguari.userId  ; else elseBlock">
+                        <img src="{{user.reciver?.myimage | img }}" class="rounded-circle"
+                            width="50px" height="50px" asp-append-version="true" alt="">
+
+                        {{user.reciver?.firstName}}
+                    </td>
+                    <ng-template #elseBlock>
+                        <td>
+                            <img src="{{user.sender?.myimage | img }}" class="rounded-circle"
+                                width="50px" height="50px" asp-append-version="true" alt="">
+
+                            {{user.sender?.firstName}}
+                        </td>
+                    </ng-template>
+
+                    <td>
+                        <button (click)="RemoveF(user.requestId)" class="btn btn-danger"> Unfriend </button>
+                    </td>
+
+                </tr>
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-3">
+        <table class="table">
+            <h3>Friends Requests</h3>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                <tr *ngFor="let user of requests">
+                    <td>
+                        <img src="{{user.sender?.myimage | img }}" class="rounded-circle" width="50px" height="50px"
+                            asp-append-version="true" alt="">
+                        {{user.sender?.firstName }}
+                    </td>
+                    <td>
+                        <button (click)="AcceptR(user.requestId)" class=" btn btn-primary">Accept </button>
+                        <button (click)="DeclineR(user.requestId)" class="btn btn-danger"> Decline </button>
+                    </td>
+                </tr>
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col  sm-3">
+        <!-- <input type="text" placeholder="Filter" name="SearchString" #filter (keyup)="onKey($event)" /> -->
+        <!-- <button class="primary" type="button" (click)="SearchUsers(filter.value)">Search</button> -->
+        
+<input [formControl]="search" placeholder="Kerko"  />
+
+        <div *ngFor="let user of SearchFriends" class="row mt-4 mb-3">
+            <div class="col-sm-6">
+                <img src="{{user.myimage | img }}" class="rounded-circle" width="50px"
+                    height="50px" asp-append-version="true" alt="">
+                {{user.firstName}}
+                <!-- {{user.myimage | img}} -->
+                <a routerLink='/chat/{{iLoguari.userId}}/{{user.userId}}' (click)="createChat(user.firstName,user.userId)"  class="btn btn-danger ">chat</a>
+            </div>
+            <div class="col-sm-6">
+                <a *ngIf="user.userId != iLoguari.userId" (click)="SendR(user.userId)"> Send Request</a>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+<div class="row">
+    <div class="col-sm-6  offset-sm-3   text-left ">
+        <div *ngFor="let item of posts" class=" p-3 border rounded mb-3 mt-3">
+            <div class="row  d-flex align-items-end">
+                <div class="d-flex row align-items-end col-sm-4">
+                    <div class="col-sm-2">
+
+                        <img src="{{item.creator?.myimage | img }}" class="rounded-circle "
+                            width="50px" height="50px" asp-append-version="true" alt="">
+                    </div>
+                    <div class=" offset-sm-2 col-sm-2">
+
+                        <h3>{{item.creator?.firstName}}</h3>
+                    </div>
+                </div>
+            </div>
+            <p>{{item.description }}</p>
+            <div class="row">
+                <img src="{{item.myimage | img }}" asp-append-version="true" alt="">
+            </div>
+
+            <div class="row mt-5 d-flex align-items-end">
+                <div class="col-sm-3">
+                    <p>{{item.createdAt | date}}</p>
+                    <p> {{item.likes.length }} likes</p>
+                    <button (click)="PostLiked(item.postId)"> test</button>
+                   
+                      
+
+     <a *ngIf="PostLiked(item.postId) === true  ; else like" class="btn btn-primary "
+                            (click)="UnLike(item.postId)" >
+                            Un Like
+                        </a>
+
+
+                        <ng-template #like>
+                            <a class="btn btn-primary " (click)="Like(item.postId)"
+                               >
+                                Like
+                            </a>
+                        </ng-template>
+                       
+
+                    
+                    <!-- <a *ngIf="item.likes.length ===0" class="btn btn-primary " (click)="Like(item.postId)"> Like </a> -->
+
+
+                    <div class="col-sm-9">
+                        <form [formGroup]="CommentForm " (ngSubmit)="onSubmit(CommentForm,item.postId)">
+
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" placeholder="Add a Comment" for="content"
+                                    name="content" formControlName="comment">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3 btn-lg">Comment</button>
+                        </form>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div>
+
+                <div *ngIf="item.comments.length !==0">
+                    <h3>Komentet</h3>
+
+                    <div *ngFor="let item2 of item.comments" class="border p-3 rounded border-primary mt-2 ">
+                        <div class="d-flex row align-items-end col-sm-4">
+                            <div class="col-sm-2">
+
+                                <img src="http://localhost:5223/Images/{{item2.useriQekomenton?.myimage}}"
+                                    class="rounded-circle mr-3" width="50px" height="50px" asp-append-version="true"
+                                    alt="">
+                            </div>
+                            <div class=" offset-sm-2 col-sm-2">
+
+                                <h3 class="ml-3">{{item2.useriQekomenton?.firstName}}</h3>
+                            </div>
+                        </div>
+                        <p>{{item2.content}} </p>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
